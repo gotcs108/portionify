@@ -9,17 +9,27 @@
   let selectedTime = {date: undefined, hour: undefined};
 
   let isOpenModal = false;
-  let openModal = () => {
+  const openModal = () => {
     isOpenModal = true;
   }
-  let openRequest = (date, hour) => {
+  const openRequest = (date, hour) => {
     openModal();
     selectedTime.date = date;
     selectedTime.hour = hour;
   };
+
+  const updateTable = (data) => {
+    const selectedItem = data.detail.selectedItem;
+    const date = selectedTime.date;
+    const hour = selectedTime.hour;
+    if (!items[date]){
+      items[date] = [];
+    }
+    items[date][hour] = selectedItem;
+  }
   import Modal from './Modal.svelte';
 </script>
-<Modal isOpenModal={isOpenModal} on:closeModal={(openState)=>isOpenModal=openState.detail.isOpenModal}/>
+<Modal isOpenModal={isOpenModal} on:closeModal={(data)=>isOpenModal=data.detail.isOpenModal} on:reservation={updateTable}/>
 {isOpenModal}
 
 <table class="timetable">
@@ -39,7 +49,7 @@
       {#each Array(7) as _, d}
         <td>
           <button on:click={() => openRequest(d,h)}>
-            {items[d]?.[h] ? `${items[d]?.[h].name} (${items[d]?.[h].percentage})` : 'click to add details'}
+            {items[d]?.[h] ? `${items[d]?.[h].name} (${items[d]?.[h].percentage}%)` : 'click to add details'}
           </button>
         </td>
       {/each}

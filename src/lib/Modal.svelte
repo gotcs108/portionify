@@ -13,7 +13,7 @@
     let tab = "food";
     let percentage = 100;
 
-    let selectedFood;
+    let selectedItem;
     let apple = {name: "Apple", calories:30};
     let chocolate = {name: "Chocolate", calories:100};
 </script>
@@ -27,11 +27,11 @@
     <!-- List of food to select from with calories-->
     {#if tab==="food"}
     <div>
-        <button on:click={() => selectedFood = apple}>
+        <button on:click={() => selectedItem = apple}>
             {apple.name}
             {apple.calories}
         </button>
-        <button on:click={() => selectedFood = chocolate}>
+        <button on:click={() => selectedItem = chocolate}>
             {chocolate.name}
             {chocolate.calories}
         </button>
@@ -40,7 +40,10 @@
     <!-- TODO: cap it to 100 -->
     Split <input bind:value={percentage}>%
 
-    <p>{selectedFood ? `You get ${selectedFood.calories*percentage*0.01}cal` : 'Please select a food'}</p>
+    <p>{selectedItem ? `You get ${selectedItem.calories*percentage*0.01}cal` : 'Please select a food'}</p>
+    <button on:click={() => dispatch('reservation', { selectedItem: {name: selectedItem.name, percentage} })}>
+        Reserve
+    </button>
     {/if}
 </div>
 
