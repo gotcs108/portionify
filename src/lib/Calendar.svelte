@@ -22,7 +22,7 @@
 <Modal isOpenModal={isOpenModal} on:closeModal={(openState)=>isOpenModal=openState.detail.isOpenModal}/>
 {isOpenModal}
 
-<table>
+<table class="timetable">
   <tr>
     <td></td>
     <td>Sun 2/20</td>
@@ -49,4 +49,7 @@
 
 
 <style>
+  table, tr, td {
+    border: 1px solid;
+  }
 </style>
