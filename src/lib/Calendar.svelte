@@ -1,9 +1,9 @@
 <script>
   let items = [];
   items[0] = [
-    {name:"water", percentage:"30%"},
+    {name:"water", percentage:30, type: 'food'},
     undefined,
-    {name:"popcorn", percentage:"30%"},
+    {name:"popcorn", percentage:30, type: 'food'},
   ];
 
   let selectedTime = {date: undefined, hour: undefined};
@@ -49,7 +49,15 @@
       {#each Array(7) as _, d}
         <td>
           <button on:click={() => openRequest(d,h)}>
-            {items[d]?.[h] ? `${items[d]?.[h].name} (${items[d]?.[h].percentage}%)` : 'click to add details'}
+            {#if items[d]?.[h]}
+              {#if items[d][h].type === 'food'}
+                {items[d]?.[h].name} ({items[d]?.[h].percentage}%)
+              {:else}
+                {items[d]?.[h].name} (Quantity: {items[d]?.[h].quantity})
+              {/if}
+            {:else}
+              {items[d]?.[h] ? `` : 'click to add details'}
+            {/if}
           </button>
         </td>
       {/each}
